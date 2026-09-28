@@ -26,7 +26,7 @@ router.post("/analyze", async (req, res) => {
         const base64Data = image.split(",")[1];
 
         const response = await ai.models.generateContent({
-            model: "gemini-3.5-flash-lite",
+            model: "gemini-3.8-flash",
 
             contents: [
                 {

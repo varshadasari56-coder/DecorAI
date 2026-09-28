@@ -4,13 +4,22 @@ const crypto = require("crypto");
 
 const router = express.Router();
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+const razorpay = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
+  ? new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    })
+  : null;
 
 router.post("/create-order", async (req, res) => {
   try {
+    if (!razorpay) {
+      return res.status(503).json({
+        success: false,
+        message: "Payments are not configured. Set Razorpay credentials in the backend environment.",
+      });
+    }
+
     const { amount } = req.body;
 
     if (!amount || amount <= 0) {
@@ -44,6 +53,13 @@ router.post("/create-order", async (req, res) => {
 
 router.post("/verify", async (req, res) => {
   try {
+    if (!process.env.RAZORPAY_KEY_SECRET) {
+      return res.status(503).json({
+        success: false,
+        message: "Payments are not configured. Set Razorpay credentials in the backend environment.",
+      });
+    }
+
     const {
       razorpay_order_id,
       razorpay_payment_id,
