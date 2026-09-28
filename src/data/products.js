@@ -490,4 +490,9 @@ const products = [
   },
 ];
 
-export default products;
+const productsWithMetadata = products.map((product) => ({
+  ...product,
+  lastUpdated: "2026-09-28",
+}));
+
+export default productsWithMetadata;

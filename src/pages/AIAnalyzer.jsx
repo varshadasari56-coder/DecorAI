@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import products from "../data/products";
+import { getAvailableProducts } from "../services/productService";
 
 function AIAnalyzer() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -23,6 +24,7 @@ function AIAnalyzer() {
 
   const findMatchingProducts = (shoppingList) => {
     const matches = [];
+    const availableProducts = getAvailableProducts();
 
     shoppingList.forEach((item) => {
       const itemColor = item.color?.toLowerCase().trim() || "";
@@ -30,7 +32,7 @@ function AIAnalyzer() {
       const itemStyle = item.style?.toLowerCase().trim() || "";
       const itemName = item.itemName?.toLowerCase().trim() || "";
 
-      const matchingProducts = products
+      const matchingProducts = availableProducts
         .filter((product) => product.availability)
         .map((product) => {
           const productCategory = product.category.toLowerCase();
