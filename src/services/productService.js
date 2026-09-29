@@ -1,27 +1,66 @@
-import products from "../data/products";
+const PRODUCT_API_URL = "http://localhost:5000/api/products";
 
-export const getProducts = () => {
-  return products;
+// Get all products from DecorAI Product API
+export const getProducts = async () => {
+  try {
+    const response = await fetch(PRODUCT_API_URL);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch products.");
+    }
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.message || "Failed to fetch products.");
+    }
+
+    return data.products;
+  } catch (error) {
+    console.error("Product API error:", error);
+    throw error;
+  }
 };
 
-export const getAvailableProducts = () => {
+// Get only available products
+export const getAvailableProducts = async () => {
+  const products = await getProducts();
+
   return products.filter((product) => product.availability);
 };
 
-export const getProductById = (id) => {
-  return products.find(
-    (product) => String(product.id) === String(id)
-  );
+// Get one product by ID
+export const getProductById = async (id) => {
+  try {
+    const response = await fetch(`${PRODUCT_API_URL}/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Product not found.");
+    }
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.message || "Product not found.");
+    }
+
+    return data.product;
+  } catch (error) {
+    console.error("Product API error:", error);
+    throw error;
+  }
 };
 
-export const searchProducts = (query = "") => {
+// Search products
+export const searchProducts = async (query = "") => {
+  const products = await getAvailableProducts();
   const searchTerm = query.toLowerCase().trim();
 
   if (!searchTerm) {
-    return getAvailableProducts();
+    return products;
   }
 
-  return getAvailableProducts().filter((product) => {
+  return products.filter((product) => {
     const searchableText = [
       product.name,
       product.category,
