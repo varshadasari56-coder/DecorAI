@@ -403,7 +403,7 @@ const products = [
     name: "Balloon Arch Strip",
     category: "Accessories",
     colors: ["Transparent"],
-    style: "Balloon Arch",
+    style: "Balloon Arch",   
     price: 99,
     currency: "INR",
     image: "/products/balloon-arch-strip.png",
