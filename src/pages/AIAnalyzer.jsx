@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAvailableProducts, searchProducts } from "../services/productService";
+import API_BASE_URL from "../services/api";
 
 function AIAnalyzer() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -530,7 +531,7 @@ function AIAnalyzer() {
                       const base64Image = reader.result;
 
                       const response = await fetch(
-                        "http://localhost:5000/api/ai/analyze",
+                        `${API_BASE_URL}/api/ai/analyze`,
                         {
                           method: "POST",
                           headers: {

@@ -1,4 +1,6 @@
-const PRODUCT_API_URL = "http://localhost:5000/api/products";
+import API_BASE_URL from "./api";
+
+const PRODUCT_API_URL = `${API_BASE_URL}/api/products`;
 
 // Get all products from DecorAI Product API
 export const getProducts = async () => {

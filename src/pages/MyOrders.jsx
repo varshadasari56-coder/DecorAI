@@ -1,5 +1,6 @@
 import { ArrowLeft, Package } from "lucide-react";
 import { useEffect, useState } from "react";
+import API_BASE_URL from "../services/api";
 
 function MyOrders() {
   const [orders, setOrders] = useState([]);
@@ -17,7 +18,7 @@ function MyOrders() {
         }
 
         const response = await fetch(
-          "http://localhost:5000/api/orders",
+          `${API_BASE_URL}/api/orders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

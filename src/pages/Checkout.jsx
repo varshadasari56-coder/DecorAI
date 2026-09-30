@@ -1,5 +1,6 @@
 import { ArrowLeft, MapPin, ShoppingBag } from "lucide-react";
 import { useEffect, useState } from "react";
+import API_BASE_URL from "../services/api";
 
 function Checkout() {
     const [cart, setCart] = useState([]);
@@ -88,7 +89,7 @@ function Checkout() {
 
         try {
             const paymentResponse = await fetch(
-                "http://localhost:5000/api/payments/create-order",
+                `${API_BASE_URL}/api/payments/create-order`,
                 {
                     method: "POST",
 
@@ -130,7 +131,7 @@ function Checkout() {
 
                     try {
                         const verifyResponse = await fetch(
-                            "http://localhost:5000/api/payments/verify",
+                            `${API_BASE_URL}/api/payments/verify`,
                             {
                                 method: "POST",
 
@@ -166,7 +167,7 @@ function Checkout() {
                         );
 
                         const response = await fetch(
-                            "http://localhost:5000/api/orders",
+                            `${API_BASE_URL}/api/orders`,
                             {
                                 method: "POST",
 
